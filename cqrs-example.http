@@ -1,0 +1,6 @@
+@cqrs_example_HostAddress = http://localhost:5066
+
+GET {{cqrs_example_HostAddress}}/Todo/ping
+Accept: application/json
+
+###
