@@ -1,6 +1,6 @@
-﻿using cqrs_example.Services.Todos;
+﻿using cqrs_example.Application.UseCases.Todos.Commands;
 
-namespace cqrs_example.Services;
+namespace cqrs_example.Domain.Ports.Out;
 
 public interface ITodoRepositoryWrite
 {

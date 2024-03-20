@@ -1,4 +1,7 @@
-﻿namespace cqrs_example.Services.Todos;
+﻿using cqrs_example.Domain.Ports.Out;
+using cqrs_example.Infraestructure.Services;
+
+namespace cqrs_example.Application.UseCases.Todos.Commands;
 
 public class DeleteTodoRequest {
     public int Id { get; set; }
@@ -14,7 +17,7 @@ public class DeleteTodo : IRequestHandler<DeleteTodoRequest>
         _todoRepositoryWrite = todoRepositoryWrite;
     }
 
-    public Task<bool> Execute(DeleteTodoRequest request)
+    public Task<bool> Do(DeleteTodoRequest request)
     {
         _todoRepositoryWrite.DeleteTodo(request.Id);
 

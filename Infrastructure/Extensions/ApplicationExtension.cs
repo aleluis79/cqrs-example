@@ -1,7 +1,11 @@
-﻿using cqrs_example.Services;
-using cqrs_example.Services.Todos;
+﻿using cqrs_example.Application.UseCases.Todos.Commands;
+using cqrs_example.Application.UseCases.Todos.Queries;
+using cqrs_example.Domain.Models;
+using cqrs_example.Domain.Ports.Out;
+using cqrs_example.Infraestructure.Repositories;
+using cqrs_example.Infraestructure.Services;
 
-namespace cqrs_example;
+namespace cqrs_example.Infraestructure.Extensions;
 
 public static class ApplicationExtension
 {
@@ -14,8 +18,6 @@ public static class ApplicationExtension
         services.AddScoped<IRequestHandler<DeleteTodoRequest>, DeleteTodo>();
         services.AddScoped<IRequestHandler<SearchTodoRequest, List<Todo>>, SearchTodo>();
         services.AddScoped<IRequestHandler<GetTodoRequest, GetTodoResponse>, GetTodo>();
-
-        services.AddSingleton<IMockBD, MockDB>();
     }
 
 }

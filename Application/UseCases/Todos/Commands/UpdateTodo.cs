@@ -1,4 +1,7 @@
-﻿namespace cqrs_example.Services.Todos;
+﻿using cqrs_example.Domain.Ports.Out;
+using cqrs_example.Infraestructure.Services;
+
+namespace cqrs_example.Application.UseCases.Todos.Commands;
 
 public class UpdateTodoRequest {
     public int Id { get; set; }
@@ -16,7 +19,7 @@ public class UpdateTodo : IRequestHandler<UpdateTodoRequest>
         _todoRepositoryWrite = todoRepositoryWrite;
     }
 
-    public Task<bool> Execute(UpdateTodoRequest request)
+    public Task<bool> Do(UpdateTodoRequest request)
     {
         _todoRepositoryWrite.UpdateTodo(request.Id, request);
 

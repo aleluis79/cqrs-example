@@ -1,8 +1,10 @@
-using cqrs_example.Services;
-using cqrs_example.Services.Todos;
+using cqrs_example.Application.UseCases.Todos.Commands;
+using cqrs_example.Application.UseCases.Todos.Queries;
+using cqrs_example.Domain.Models;
+using cqrs_example.Infraestructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cqrs_example.Controllers;
+namespace cqrs_example.Infraestructure.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -45,13 +47,13 @@ public class TodoController : ControllerBase
     [HttpPost()]
     public async Task<ActionResult<bool>> CreateTodo([FromBody] CreateTodoRequest todo)
     {
-        return Ok(await _createTodo.Execute(todo));
+        return Ok(await _createTodo.Do(todo));
     }
 
     [HttpPut()]
     public async Task<ActionResult<bool>> UpdateTodo([FromBody] UpdateTodoRequest todo)
     {
-        return Ok(await _updateTodo.Execute(todo));
+        return Ok(await _updateTodo.Do(todo));
     }
 
     [HttpDelete("{id:int}")]
@@ -60,23 +62,24 @@ public class TodoController : ControllerBase
         var todo = new DeleteTodoRequest {
             Id = id
         };
-        return Ok(await _deleteTodo.Execute(todo));
+        return Ok(await _deleteTodo.Do(todo));
     }
 
     [HttpPost("search")]
     public async Task<ActionResult<List<Todo>>> SearchTodo([FromBody] SearchTodoRequest todo)
     {
-        return Ok(await _searchTodo.Execute(todo));
+        return Ok(await _searchTodo.Do(todo, cancellationToken: default));
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Todo>> GetTodo(int id)
     {
-        var todoResponse = await _getTodo.Execute(
+        var todoResponse = await _getTodo.Do(
             new GetTodoRequest
             {
                 Id = id
-            }
+            },
+            cancellationToken: default
         );
         
         return (todoResponse.Todo == null) ? NotFound() : Ok(todoResponse.Todo);

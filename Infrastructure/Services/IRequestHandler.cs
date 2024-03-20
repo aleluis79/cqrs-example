@@ -1,4 +1,5 @@
-﻿namespace cqrs_example.Services;
+﻿namespace cqrs_example.Infraestructure.Services;
+
 /// <summary>
 /// Interface for request handlers without a response
 /// </summary>
@@ -9,7 +10,7 @@ public interface IRequestHandler<TRequest> where TRequest : class {
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    Task<bool> Execute(TRequest request);
+    Task<bool> Do(TRequest request);
 }
 
 /// <summary>
@@ -23,5 +24,5 @@ public interface IRequestHandler<TRequest, TResponse> where TRequest : class whe
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    Task<TResponse> Execute(TRequest request);
+    Task<TResponse> Do(TRequest request, CancellationToken cancellationToken);
 }

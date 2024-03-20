@@ -1,4 +1,4 @@
-﻿namespace cqrs_example;
+﻿namespace cqrs_example.Domain.Models;
 
 public class Todo
 {

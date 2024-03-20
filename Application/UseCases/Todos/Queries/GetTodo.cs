@@ -1,6 +1,8 @@
-﻿using cqrs_example.Services;
+﻿using cqrs_example.Domain.Models;
+using cqrs_example.Domain.Ports.Out;
+using cqrs_example.Infraestructure.Services;
 
-namespace cqrs_example;
+namespace cqrs_example.Application.UseCases.Todos.Queries;
 
 public class GetTodoRequest
 {
@@ -21,12 +23,12 @@ public class GetTodo : IRequestHandler<GetTodoRequest, GetTodoResponse>
         _todoRepositoryRead = todoRepositoryRead;
     }
 
-    public Task<GetTodoResponse> Execute(GetTodoRequest request)
+    public Task<GetTodoResponse> Do(GetTodoRequest request, CancellationToken cancellationToken = default)
     {
         return Task.FromResult(
             new GetTodoResponse
             {
-                Todo = _todoRepositoryRead.GetTodo(request.Id).Result
+                Todo = _todoRepositoryRead.GetTodo(request.Id, cancellationToken).Result
             }
         );
         
